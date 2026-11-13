@@ -1,0 +1,17 @@
+{
+  "_comment": "Model allowlist. A model may be used for a task only if it is listed here for that task. Changing this file is a governed change: it needs review by the AI governance owner (see .github/CODEOWNERS).",
+  "models": [
+    {"provider": "offline", "model": "deterministic-rules-v1",
+     "approved_tasks": ["extract_clinical_facts", "answer_patient_question", "triage_incident"],
+     "approved_by": "platform-engineering", "approved_on": "2026-11-01",
+     "notes": "No network, no model. Used for tests and local runs."},
+    {"provider": "vertex-claude", "model": "claude-opus-5-5",
+     "approved_tasks": ["extract_clinical_facts", "answer_patient_question", "triage_incident"],
+     "approved_by": "PENDING", "approved_on": null,
+     "notes": "Placeholder entry. Not approved until evaluated on the golden set through Vertex AI."},
+    {"provider": "vertex-gemini", "model": "gemini-2.5-pro",
+     "approved_tasks": ["extract_clinical_facts", "answer_patient_question", "triage_incident"],
+     "approved_by": "PENDING", "approved_on": null,
+     "notes": "Placeholder entry. Confirm the current model ID in Vertex AI before evaluation."}
+  ]
+}

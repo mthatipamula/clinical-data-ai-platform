@@ -1,0 +1,8 @@
+project_id = "your-project-id"
+env        = "dev"
+region     = "us-east4"
+
+# Set these once the organization has an access policy and an approver group.
+# access_policy_id  = "123456789"
+# perimeter_dry_run = true
+# approver_group    = "group:cdap-approvers@example.com"

@@ -1,0 +1,9 @@
+id: rb-pubsub-backlog
+title: Raw ingest subscription backlog is growing
+alert_type: pubsub_backlog_growing
+hypothesis: Harmonization workers are not keeping up with ingest. A backlog with healthy workers suggests under-provisioning; with failing workers, a bad deploy.
+steps:
+  - {tool: get_pubsub_backlog, args: {subscription: raw-ingest-harmonizer}, why: Confirm the backlog and its age}
+  - {tool: get_dataflow_job_status, args: {job: harmonizer}, why: Check worker count and error rate}
+  - {tool: get_recent_deploys, args: {service: harmonizer}, why: Rule a recent change in or out}
+  - {tool: scale_dataflow_workers, args: {job: harmonizer, max_workers: 12}, why: Add capacity to drain the backlog}

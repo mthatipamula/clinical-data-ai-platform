@@ -1,0 +1,8 @@
+id: rb-dataflow-errors
+title: Harmonization error rate above threshold
+alert_type: dataflow_error_rate
+hypothesis: A recent deploy introduced a conversion bug, or a source changed its format. Dead-letter reasons clustered on one source point to a format change.
+steps:
+  - {tool: get_dataflow_job_status, args: {job: harmonizer}, why: Read the error rate and dead-letter volume}
+  - {tool: get_recent_deploys, args: {service: harmonizer}, why: Find a deploy that lines up with the first errors}
+  - {tool: rollback_deployment, args: {service: harmonizer}, why: Return to the last known good version}

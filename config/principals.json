@@ -1,0 +1,12 @@
+{
+  "_comment": "Demo sign-ins for local development only. The API refuses to start with demo sign-in when CDAP_ENV=prod. Production identities come from the identity provider; roles and attributes come from group membership.",
+  "principals": [
+    {"id": "patient-james", "name": "James Zielinski", "role": "patient",
+     "identifier": {"system": "urn:cdap:mrn:northside", "value": "NS100001"}},
+    {"id": "dr-okafor", "name": "Dr. Adaeze Okafor", "role": "provider", "tenant": "northside-health"},
+    {"id": "payer-analyst", "name": "Quality Analyst, Summit Health Plan", "role": "payer", "tenant": "summit-health-plan"},
+    {"id": "ops-oncall", "name": "On-call Engineer", "role": "operator"},
+    {"id": "ops-lead", "name": "Operations Lead", "role": "operator", "can_approve": true},
+    {"id": "auditor", "name": "Compliance Auditor", "role": "auditor"}
+  ]
+}

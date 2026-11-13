@@ -1,0 +1,50 @@
+{
+  "_comment": "Source registry. Read by the Go gateway (admission), the Java harmonizer (provenance tags) and the Python API (purpose-of-use enforcement). One file, one meaning, three readers.",
+  "sources": [
+    {
+      "id": "ehr-northside",
+      "tenant": "northside-health",
+      "kind": "fhir",
+      "description": "Ambulatory EHR, FHIR R4 patient bundles",
+      "permitted_purposes": ["treatment", "payment", "operations", "patient_access"],
+      "requires_consent": false,
+      "sensitivity": "standard"
+    },
+    {
+      "id": "payer-claims",
+      "tenant": "summit-health-plan",
+      "kind": "x12_837",
+      "description": "Professional claims, X12 837P",
+      "permitted_purposes": ["treatment", "payment", "operations", "patient_access"],
+      "requires_consent": false,
+      "sensitivity": "standard"
+    },
+    {
+      "id": "hospital-adt",
+      "tenant": "northside-health",
+      "kind": "hl7v2",
+      "description": "Hospital admit/discharge feed, HL7 v2 ADT",
+      "permitted_purposes": ["treatment", "payment", "operations", "patient_access"],
+      "requires_consent": false,
+      "sensitivity": "standard"
+    },
+    {
+      "id": "bh-clinic",
+      "tenant": "riverbend-behavioral",
+      "kind": "fhir",
+      "description": "Substance-use and behavioral health program (42 CFR Part 2 style restrictions)",
+      "permitted_purposes": ["treatment", "patient_access"],
+      "requires_consent": true,
+      "sensitivity": "part2"
+    },
+    {
+      "id": "document-feed",
+      "tenant": "northside-health",
+      "kind": "document",
+      "description": "Clinical notes as unstructured text",
+      "permitted_purposes": ["treatment", "payment", "operations", "patient_access"],
+      "requires_consent": false,
+      "sensitivity": "standard"
+    }
+  ]
+}

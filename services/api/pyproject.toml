@@ -1,0 +1,26 @@
+[project]
+name = "cdap-api"
+version = "0.1.0"
+description = "Clinical data and AI platform: data products, rules, LLM, AI operations and audit"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+# Installed only where the platform talks to Vertex AI.
+vertex = ["google-genai>=1.0", "anthropic[vertex]>=0.60"]
+
+[dependency-groups]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+# Run from this directory: `uv run python -m cdap.cli ...` and `uv run uvicorn cdap.api:app`.
+# Not installed as a package, so there is no editable-install path file to go missing.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
