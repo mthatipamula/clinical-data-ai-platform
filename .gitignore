@@ -1,0 +1,29 @@
+# Generated at runtime
+/var/
+/bin/
+/data/synthetic/
+evidence.json
+
+# Go
+*.test
+
+# Java / Gradle
+pipelines/harmonizer/build/
+pipelines/harmonizer/.gradle/
+
+# Python
+__pycache__/
+.venv/
+.pytest_cache/
+
+# Web
+web/node_modules/
+web/dist/
+
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/*.tfstate*
+infra/terraform/*.tfvars
+!infra/terraform/*.tfvars.example
+
+.DS_Store
