@@ -1,0 +1,8 @@
+id: rb-bq-spend
+title: BigQuery spend anomaly
+alert_type: bq_spend_anomaly
+hypothesis: One job or one team label accounts for most of the excess, usually an unpartitioned scan or a runaway scheduled query.
+steps:
+  - {tool: get_bq_spend_by_label, args: {window_hours: 24}, why: Attribute the excess to a label and job}
+  - {tool: cancel_bq_job, args: {job_id: from_diagnostics}, why: Stop the runaway job}
+  - {tool: purge_dataset, args: {dataset: scratch}, why: Reclaim storage from scratch tables}

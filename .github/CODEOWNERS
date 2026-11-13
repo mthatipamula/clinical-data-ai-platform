@@ -1,0 +1,13 @@
+# Replace the placeholder teams with real ones. Until then GitHub ignores these lines.
+# Separation of duties: the owner of a governed file must not be the PR's author.
+
+/config/models.json                 @your-org/ai-governance
+/services/api/prompts/              @your-org/ai-governance
+/config/agents.json                 @your-org/security
+/infra/terraform/iam.tf             @your-org/security
+/infra/terraform/vpc_sc.tf          @your-org/security
+/config/sources.json                @your-org/privacy
+/services/api/cdap/access.py        @your-org/privacy @your-org/security
+/services/api/rules/                @your-org/clinical-informatics
+/pipelines/harmonizer/src/main/java/com/cdap/harmonizer/Measures.java  @your-org/clinical-informatics
+/CLAUDE.md                          @your-org/platform-engineering

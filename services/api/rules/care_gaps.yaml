@@ -1,0 +1,86 @@
+# Care-gap and insight rules. Evaluated per person over facts built only from sources whose data
+# rights include health care operations. Bump `version` on any change to a rule; the version is
+# stored with every result so a past decision can be explained.
+#
+# Fact paths: measures.<ID>.{in_denominator,numerator}, structured.latest_a1c,
+# notes.{latest_a1c,tobacco_use,mammogram_declined}, utilization.ed_visits_ytd, demographics.age
+# Operators: eq ne gt gte lt lte exists missing
+rules:
+  - id: insight-a1c-in-notes-only
+    version: 1
+    severity: high
+    title: Uncontrolled HbA1c documented only in a clinical note
+    when:
+      all:
+        - {fact: measures.DM-A1C-POOR-CONTROL.in_denominator, op: eq, value: true}
+        - {fact: structured.latest_a1c, op: missing}
+        - {fact: notes.latest_a1c, op: gt, value: 9.0}
+    recommendation: >-
+      A note records an HbA1c above 9% from an outside lab, but there is no structured result this
+      year. Reconcile the result into the chart and review the diabetes regimen.
+    patient_text: >-
+      A recent note lists an A1c result above the usual goal. Ask your care team to review it with you.
+
+  - id: gap-a1c-no-result
+    version: 2
+    severity: medium
+    title: No HbA1c result this year
+    when:
+      all:
+        - {fact: measures.DM-A1C-POOR-CONTROL.in_denominator, op: eq, value: true}
+        - {fact: structured.latest_a1c, op: missing}
+        - {fact: notes.latest_a1c, op: missing}
+    recommendation: Order an HbA1c test; none is on record for this measurement year.
+    patient_text: You are due for an A1c blood test this year.
+
+  - id: gap-a1c-uncontrolled
+    version: 1
+    severity: high
+    title: HbA1c above 9%
+    when:
+      all:
+        - {fact: structured.latest_a1c, op: gt, value: 9.0}
+    recommendation: Most recent HbA1c is above 9%. Review the regimen and schedule follow-up testing in 3 months.
+    patient_text: Your most recent A1c is above the usual goal. Talk with your care team about next steps.
+
+  - id: gap-bp-uncontrolled
+    version: 1
+    severity: medium
+    title: Blood pressure not at goal
+    when:
+      all:
+        - {fact: measures.HTN-BP-CONTROL.in_denominator, op: eq, value: true}
+        - {fact: measures.HTN-BP-CONTROL.numerator, op: eq, value: false}
+    recommendation: Most recent blood pressure is at or above 140/90, or none was recorded this year. Recheck and review therapy.
+    patient_text: Your last blood pressure reading was above goal. A recheck is recommended.
+
+  - id: gap-mammography
+    version: 1
+    severity: medium
+    title: Breast cancer screening due
+    when:
+      all:
+        - {fact: measures.BCS-MAMMOGRAPHY.in_denominator, op: eq, value: true}
+        - {fact: measures.BCS-MAMMOGRAPHY.numerator, op: eq, value: false}
+    recommendation: No mammogram on record in the screening window. Offer screening; note any documented patient decision.
+    patient_text: You may be due for a screening mammogram.
+
+  - id: care-management-high-ed-use
+    version: 1
+    severity: high
+    title: Three or more emergency visits this year
+    when:
+      all:
+        - {fact: utilization.ed_visits_ytd, op: gte, value: 3}
+    recommendation: Refer to care management for outreach and a follow-up primary care visit.
+    patient_text: You have had several emergency visits this year. A care manager can help coordinate follow-up care.
+
+  - id: tobacco-cessation
+    version: 1
+    severity: low
+    title: Current tobacco use documented in notes
+    when:
+      all:
+        - {fact: notes.tobacco_use, op: eq, value: current}
+    recommendation: Offer cessation counseling and pharmacotherapy; tobacco use appears only in free text.
+    patient_text: Support for quitting tobacco is available if and when you want it.

@@ -1,0 +1,13 @@
+{
+  "_comment": "Least privilege for AI agents. An agent can call only the tools listed for it, and only tools at or below auto_approve_max_risk run without a human. Each agent maps to its own Google service account with matching IAM (infra/terraform/iam.tf).",
+  "agents": [
+    {
+      "id": "ops-triage-agent",
+      "description": "Triage platform alerts, gather diagnostics, propose runbook actions",
+      "service_account": "sa-ops-agent",
+      "allowed_tools": ["get_pubsub_backlog", "get_dataflow_job_status", "get_recent_deploys",
+                        "get_bq_spend_by_label", "scale_dataflow_workers", "rollback_deployment", "cancel_bq_job"],
+      "auto_approve_max_risk": "low"
+    }
+  ]
+}
